@@ -5,6 +5,8 @@ VisualStudioVersion = 17.13.35931.197 d17.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Minesweeper_igra", "Minesweeper_igra.vcxproj", "{53397871-4E87-4EA2-97A9-4097439397FD}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "minesweeper_UnitTest", "..\minesweeper_UnitTest\minesweeper_UnitTest.vcxproj", "{D30878DC-0D57-5558-A3F7-8B063431D30F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{53397871-4E87-4EA2-97A9-4097439397FD}.Release|x64.Build.0 = Release|x64
 		{53397871-4E87-4EA2-97A9-4097439397FD}.Release|x86.ActiveCfg = Release|Win32
 		{53397871-4E87-4EA2-97A9-4097439397FD}.Release|x86.Build.0 = Release|Win32
+		{D30878DC-0D57-5558-A3F7-8B063431D30F}.Debug|x64.ActiveCfg = Debug|x64
+		{D30878DC-0D57-5558-A3F7-8B063431D30F}.Debug|x64.Build.0 = Debug|x64
+		{D30878DC-0D57-5558-A3F7-8B063431D30F}.Debug|x86.ActiveCfg = Debug|Win32
+		{D30878DC-0D57-5558-A3F7-8B063431D30F}.Debug|x86.Build.0 = Debug|Win32
+		{D30878DC-0D57-5558-A3F7-8B063431D30F}.Release|x64.ActiveCfg = Release|x64
+		{D30878DC-0D57-5558-A3F7-8B063431D30F}.Release|x64.Build.0 = Release|x64
+		{D30878DC-0D57-5558-A3F7-8B063431D30F}.Release|x86.ActiveCfg = Release|Win32
+		{D30878DC-0D57-5558-A3F7-8B063431D30F}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
