@@ -2,15 +2,17 @@
 
 #include <iostream>
 #include <string> 
+#include <array>
 
 class field
 {
 private:
 	int touch_counter = 0;
 	bool is_bomb = 0;
-	std::string unreaveled_sign = " [ ] ";
+	std::string unrevealed_sign = " [ ] ";
 	std::string revealed_sign = " [" + std::to_string(touch_counter) + "] ";
 public:
+	std::string getUnrevealed_sign();
 	virtual std::string getRevealed_sign();
 	bool getIs_bomb();
 	bool is_revealed = 0;
@@ -26,4 +28,5 @@ public:
 	std::string getRevealed_sign() override;
 };
 
-void fill();
+field*** fill(int d);
+void print_matrix(field*** matrix, int d);
