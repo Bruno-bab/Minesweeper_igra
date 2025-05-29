@@ -5,13 +5,31 @@
 #include <vector>
 
 
-bool field::getIs_bomb() { return is_bomb; };
+bool field::getIs_bomb() { return 0; }
+
+bool field::getIs_revealed() { return is_revealed; }
 
 std::string field::getUnrevealed_sign() { return unrevealed_sign; }
 
 std::string field::getRevealed_sign() { return revealed_sign; }
 
-std::string bomb::getRevealed_sign() { return revealed_sign; }
+std::string bomb::getRevealed_sign() { return " [X] "; }
+
+bool bomb::getIs_bomb() { return 1; };
+
+int field::getTouch_counter() { return touch_counter; }
+
+void field::setTouch_counter(int count)
+{ 
+	touch_counter = count;
+	updateRevealedSign();
+}
+
+void field::setRevealed_sign(std::string rsign) { revealed_sign = rsign; }
+
+void field::setIsRevealed(bool revealed_c) { is_revealed = revealed_c; }
+
+void field::updateRevealedSign() { revealed_sign = " [" + std::to_string(touch_counter) + "] "; }
 
 field*** fill(int d)
 {
@@ -25,24 +43,18 @@ field*** fill(int d)
 		}
 	}
 
-	for (int i = 0; i < d; ++i)
-	{
-		for (int j = 0; j < d; ++j)
-			matrix[i][j] = new field();
-	}
-
 	srand(time(0));
 	int random_count;
 	switch (d)
 	{
 	case 20:
-		random_count = 16;
+		random_count = 45;
 		break;
 	case 10:
-		random_count = 7;
+		random_count = 10;
 		break;
 	case 5:
-		random_count = 3;
+		random_count = 2;
 		break;
 	}
 
@@ -64,13 +76,40 @@ field*** fill(int d)
 
 void print_matrix(field*** matrix, int d)
 {
+	std::cout << " ";
+	for (int i = 0; i < d; ++i)
+	{
+		std::cout << "    " << i;
+	}
+	std::cout << "\n  ";
+	for (int i = 0; i < d; ++i)
+	{
+		std::cout << "_____";
+	}
+	std::cout << "\n0 |";
 	for (int i = 0; i < d; ++i)
 	{
 		for (int j = 0; j < d; ++j)
 		{
-			std::cout << matrix[i][j]->getRevealed_sign();
+			if (!matrix[i][j]->getIs_revealed())
+				std::cout << matrix[i][j]->getUnrevealed_sign();
+			else
+				std::cout << matrix[i][j]->getRevealed_sign();
 		}
-		std::cout << "\n" << "\n";
+		if (i < d - 1)
+		{
+			std::cout << "\n  |\n";
+			std::cout << i + 1 << " |";
+		}
 	}
+}
+
+field*** reveal_matrix(field*** matrix, int d, int x, int y)
+{
+	if (!matrix[x][y]->getIs_revealed())
+	{
+		matrix[x][y]->setIsRevealed(1);
+	}
+	return matrix;
 }
 

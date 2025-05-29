@@ -5,7 +5,7 @@ VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Minesweeper_igra", "Minesweeper_igra.vcxproj", "{53397871-4E87-4EA2-97A9-4097439397FD}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTestForMinesweeper", "..\UnitTestForMinesweeper\UnitTestForMinesweeper.vcxproj", "{543824C5-DD69-6D02-E9D1-193E505B98F7}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTestForMinesweeper", "UnitTestForMinesweeper\UnitTestForMinesweeper.vcxproj", "{543824C5-DD69-6D02-E9D1-193E505B98F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

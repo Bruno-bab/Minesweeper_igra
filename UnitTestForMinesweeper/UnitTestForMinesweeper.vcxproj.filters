@@ -13,18 +13,21 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Minesweeper">
+      <UniqueIdentifier>{1e9e2168-9a09-49eb-bcab-cb88c3db7089}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="UnitTestForMinesweeper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Minesweeper.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\Minesweeper.cpp">
+      <Filter>Source Files\Minesweeper</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Minesweeper.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="..\Minesweeper.h">
+      <Filter>Source Files\Minesweeper</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

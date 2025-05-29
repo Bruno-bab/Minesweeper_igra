@@ -3,6 +3,8 @@
 int main()
 {
 	print_matrix(fill(5), 5);
+	std::cout << "\n\n";
+	print_matrix(reveal_matrix(fill(5), 5, 1, 1), 5);
 
 	/*for (int i = 0; i < 10; i++)
 	{
