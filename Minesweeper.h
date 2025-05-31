@@ -40,4 +40,8 @@ field*** fill(int d);
 
 void print_matrix(field*** matrix, int d);
 
+int bomb_touching(field*** matrix, int d, int x, int y);
+
 field*** reveal_matrix(field*** matrix, int d, int x, int y);
+
+bool game_over(field*** matrix, int d);
