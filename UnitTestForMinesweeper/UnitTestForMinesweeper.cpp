@@ -41,21 +41,27 @@ namespace UnitTestForMinesweeper
 	TEST_CLASS(Fill_Tests)
 	{
 	public:
-		TEST_METHOD(Correct_number_of_bombs)
+		TEST_METHOD(Matrix_size_and_bomb_count)
 		{
 			int d = 5;
-			field*** matrix = fill(d);
-			int bombCount = 0;
+			int bombCount = 2;
+			field*** matrix = fill(d, bombCount);
+			for (int i = 0; i < d; ++i)
+			{
+				for (int j = 0; j < d; ++j)
+					Assert::IsNotNull(matrix[i][j]);
+			}
+			int real_bomb_count = 0;
 			for (int i = 0; i < d; ++i)
 			{
 				for (int j = 0; j < d; ++j)
 				{
 					if (matrix[i][j]->getIs_bomb())
-						bombCount++;
+						real_bomb_count++;
 				}
 			}
 
-			Assert::AreEqual(2, bombCount);
+			Assert::AreEqual(bombCount, real_bomb_count);
 		}
 	};
 
@@ -76,8 +82,8 @@ namespace UnitTestForMinesweeper
 			matrix[0][1] = new bomb();
 			delete matrix[1][1];
 			matrix[1][1] = new bomb();
-
 			int count = bomb_touching(matrix, d, 1, 0);
+
 			Assert::AreEqual(2, count);
 		}
 	};
