@@ -36,7 +36,7 @@ public:
 	std::string getRevealed_sign() override;
 };
 
-field*** fill(int d);
+field*** fill(int d, int random_count);
 
 void print_matrix(field*** matrix, int d);
 

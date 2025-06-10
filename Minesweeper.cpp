@@ -29,7 +29,7 @@ void field::setIsRevealed(bool revealed_c) { is_revealed = revealed_c; }
 
 void field::updateRevealedSign() { revealed_sign = " [" + std::to_string(touch_counter) + "] "; }
 
-field*** fill(int d)
+field*** fill(int d, int random_count)
 {
 	field*** matrix = new field * *[d]; //popunjava matricu sa field klasom
 	for (int i = 0; i < d; ++i)
@@ -40,19 +40,6 @@ field*** fill(int d)
 	}
 
 	srand(time(0));
-	int random_count;
-	switch (d) //ovisno o velicini matrice omjer bombi se mijenja (vise vrsta razina)
-	{
-	case 15:
-		random_count = 25;
-		break;
-	case 10:
-		random_count = 10;
-		break;
-	case 5:
-		random_count = 2;
-		break;
-	}
 
 	for (int j = 0; j < random_count; ++j) //na nasumicnim mjestima se brise field klasa i mjenja se bomb klasom
 	{
@@ -185,7 +172,7 @@ bool game_over(field*** matrix, int d) //govori korisniku da li je igra gotova o
 				return 0;
 			if (matrix[i][j]->getIs_bomb() && (matrix[i][j]->getIs_revealed()))
 			{
-				std::cout << "\nGAME OVER\n\nYOU LOSE\n";
+				std::cout << "\nGAME OVER\nYOU LOSE\n";
 				return 1;
 			}
 		}
@@ -193,3 +180,4 @@ bool game_over(field*** matrix, int d) //govori korisniku da li je igra gotova o
 	std::cout << "\nYOU WIN\n";
 	return 1;
 }
+
