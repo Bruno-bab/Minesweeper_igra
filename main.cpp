@@ -1,4 +1,5 @@
 #include "Minesweeper.h"
+#include <limits>
 
 int main()
 {
@@ -6,12 +7,18 @@ int main()
 	{
 		bool i;
 		int n;
+		char c;
 		int size, bomb_c;
 		
-		std::cout << "\nEasy mode (0)\nNormal mode (1)\nHard mode (2)\nCustom game (3)\n";
-		std::cin >> n;
-		if (n < 0 || n > 3)
-			continue;
+		std::cout << "\nEasy mode (2 bombs) -> 0\nNormal mode (10 bombs) -> 1\nHard mode (25 bombs) -> 2\nCustom game -> 3\n";
+		while (1)
+		{
+			if ((std::cin >> n) && (std::cin.peek() == '\n') && n >= 0 && n <= 3)
+				break;
+			std::cout << "\nEnter an integer between 0 and 3: ";
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
 
 		switch (n)
 		{
@@ -28,23 +35,28 @@ int main()
 			bomb_c = 25;
 			break;
 		case 3:
+			std::cout << "\nGame size: ";
 			while (1)
 			{
-				std::cout << "\nGame size: ";
-				std::cin >> size;
-				if (!(size < 1 || size > 99))
+				if ((std::cin >> size) && (std::cin.peek() == '\n') && size >= 1 && size <= 99)
 					break;
+				std::cout << "\nEnter an integer between 1 and 99: ";
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			}
+
+			std::cout << "\nNumber of bombs: ";
 			while (1)
 			{
-				std::cout << "\nNumber of bombs: ";
-				std::cin >> bomb_c;
-				if (!(bomb_c < 0 || bomb_c > size * size))
+				if ((std::cin >> bomb_c) && (std::cin.peek() == '\n') && bomb_c >= 1 && bomb_c <= (size * size) - 1)
 					break;
+				std::cout << "\nEnter an integer between 1 and " << (size * size) - 1 << ": ";
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			}
 		}
 		
-		field*** matrix = fill(size, bomb_c);
+		std::vector<std::vector<field*>> matrix = fill(size, bomb_c);
 		print_matrix(matrix, size);
 
 		while (1)
@@ -53,27 +65,41 @@ int main()
 				break;
 			std::cout << "\n\n";
 			int x, y;
+
+			std::cout << "\nX coordinate (row): ";
 			while (1)
 			{
-				std::cout << "\nX coordinate (row): ";
-				std::cin >> x;
-				if (!(x < 0 || x > size - 1))
+				if ((std::cin >> x) && (std::cin.peek() == '\n') && x >= 0 && x <= size - 1)
 					break;
+				std::cout << "\nEnter an integer between 0 and " << size - 1 << ": ";
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			}
+
+			std::cout << "\nY coordinate (column): ";
 			while (1)
 			{
-				std::cout << "\nY coordinate (column): ";
-				std::cin >> y;
-				if (!(y < 0 || y > size - 1))
+				if ((std::cin >> y) && (std::cin.peek() == '\n') && y >= 0 && y <= size - 1)
 					break;
+				std::cout << "\nEnter an integer between 0 and " << size - 1 << ": ";
+				std::cin.clear();
+				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			}
+
 			std::cout << "\n\n";
 			reveal_matrix(matrix, size, x, y);
 			print_matrix(matrix, size);
 		}
 
 		std::cout << "\nPLAY AGAIN? YES(0)  NO(1)\n";
-		std::cin >> i;
+		while (1)
+		{
+			if ((std::cin >> i) && (std::cin.peek() == '\n') && i >= 0 && i <= 1)
+				break;
+			std::cout << "\nEnter 1 or 0 ";
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
 		if (i)
 			break;
 	}

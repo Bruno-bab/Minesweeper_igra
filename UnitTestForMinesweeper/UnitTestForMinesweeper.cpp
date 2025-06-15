@@ -45,7 +45,7 @@ namespace UnitTestForMinesweeper
 		{
 			int d = 5;
 			int bombCount = 2;
-			field*** matrix = fill(d, bombCount);
+			std::vector<std::vector<field*>> matrix = fill(d, bombCount);
 			for (int i = 0; i < d; ++i)
 			{
 				for (int j = 0; j < d; ++j)
@@ -71,10 +71,9 @@ namespace UnitTestForMinesweeper
 		TEST_METHOD(Bomb_touching_count)
 		{
 			int d = 5;
-			field*** matrix = new field * *[d];
+			std::vector<std::vector<field*>> matrix(d, std::vector<field*>(d));
 			for (int i = 0; i < d; i++)
 			{
-				matrix[i] = new field * [d];
 				for (int j = 0; j < d; j++)
 					matrix[i][j] = new field();
 			}
@@ -94,10 +93,9 @@ namespace UnitTestForMinesweeper
 		TEST_METHOD(Reveal_all_if_bomb_is_chosen)
 		{
 			int d = 5;
-			field*** matrix = new field * *[d];
+			std::vector<std::vector<field*>> matrix(d, std::vector<field*>(d));
 			for (int i = 0; i < d; i++)
 			{
-				matrix[i] = new field * [d];
 				for (int j = 0; j < d; j++)
 					matrix[i][j] = new field();
 			}
@@ -116,13 +114,12 @@ namespace UnitTestForMinesweeper
 	TEST_CLASS(Game_Over_Tests)
 	{
 	public:
-		int d = 5;
-		field*** matrix = new field * *[d];
 		TEST_METHOD(Return_0_if_not_all_revealed)
 		{
+			int d = 5;
+			std::vector<std::vector<field*>> matrix(d, std::vector<field*>(d));
 			for (int i = 0; i < d; ++i)
 			{
-				matrix[i] = new field * [d];
 				for (int j = 0; j < d; ++j)
 					matrix[i][j] = new field();
 			}
@@ -133,9 +130,10 @@ namespace UnitTestForMinesweeper
 
 		TEST_METHOD(Return_1_if_bomb_is_revealed)
 		{
+			int d = 5;
+			std::vector<std::vector<field*>> matrix(d, std::vector<field*>(d));
 			for (int i = 0; i < d; i++)
 			{
-				matrix[i] = new field * [d];
 				for (int j = 0; j < d; j++)
 					matrix[i][j] = new field();
 			}

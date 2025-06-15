@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string> 
 #include <array>
+#include <vector>
 
 class field
 {
@@ -36,12 +37,12 @@ public:
 	std::string getRevealed_sign() override;
 };
 
-field*** fill(int d, int random_count);
+std::vector<std::vector<field*>> fill(int d, int random_count);
 
-void print_matrix(field*** matrix, int d);
+void print_matrix(std::vector<std::vector<field*>> matrix, int d);
 
-int bomb_touching(field*** matrix, int d, int x, int y);
+int bomb_touching(std::vector<std::vector<field*>> matrix, int d, int x, int y);
 
-field*** reveal_matrix(field*** matrix, int d, int x, int y);
+std::vector<std::vector<field*>> reveal_matrix(std::vector<std::vector<field*>> matrix, int d, int x, int y);
 
-bool game_over(field*** matrix, int d);
+bool game_over(std::vector<std::vector<field*>> matrix, int d);

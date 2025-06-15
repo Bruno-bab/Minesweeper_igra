@@ -1,7 +1,6 @@
 #include "Minesweeper.h"
 #include <cstdlib>
 #include <ctime>
-#include <array>
 
 bool field::getIs_bomb() { return 0; }
 
@@ -29,30 +28,29 @@ void field::setIsRevealed(bool revealed_c) { is_revealed = revealed_c; }
 
 void field::updateRevealedSign() { revealed_sign = " [" + std::to_string(touch_counter) + "] "; }
 
-field*** fill(int d, int random_count)
+std::vector<std::vector<field*>> fill(int d, int random_count)
 {
-	field*** matrix = new field * *[d]; //popunjava matricu sa field klasom
+	std::vector<std::vector<field*>> matrix(d, std::vector<field*>(d)); //popunjava matricu sa field klasom
 	for (int i = 0; i < d; ++i)
 	{
-		matrix[i] = new field * [d];
 		for (int j = 0; j < d; ++j)
 			matrix[i][j] = new field();
 	}
 
 	srand(time(0));
 
-	for (int j = 0; j < random_count; ++j) //na nasumicnim mjestima se brise field klasa i mjenja se bomb klasom
+	int counter = 0;
+	while (counter < random_count)
 	{
-			int random_i = rand() % d;
-			int random_j = rand() % d;
+		int random_i = rand() % d;
+		int random_j = rand() % d;
 
-			if (!(matrix[random_i][random_j])->getIs_bomb())
-			{
-				delete matrix[random_i][random_j];
-				matrix[random_i][random_j] = new bomb();
-			}
-			else
-				continue;
+		if (!(matrix[random_i][random_j])->getIs_bomb())
+		{
+			delete matrix[random_i][random_j];
+			matrix[random_i][random_j] = new bomb();
+			counter++;
+		}
 	}
 
 	for (int i = 0; i < d; ++i) //touch counter se povecava ako polje dira bombu
@@ -67,7 +65,7 @@ field*** fill(int d, int random_count)
 	return matrix;
 }
 
-void print_matrix(field*** matrix, int d) //ispisuje matricu zajdno sa x i y koordinatama
+void print_matrix(std::vector<std::vector<field*>> matrix, int d) //ispisuje matricu zajdno sa x i y koordinatama
 {
 	std::cout << " ";
 	for (int i = 0; i < d; ++i)
@@ -103,7 +101,7 @@ void print_matrix(field*** matrix, int d) //ispisuje matricu zajdno sa x i y koo
 	}
 }
 
-int bomb_touching(field*** matrix, int d, int x, int y) //broji koliko se bombi nalazi u 8 polja oko odabranog polja
+int bomb_touching(std::vector<std::vector<field*>> matrix, int d, int x, int y) //broji koliko se bombi nalazi u 8 polja oko odabranog polja
 {
 	int bomb_counter = 0;
 
@@ -128,7 +126,7 @@ int bomb_touching(field*** matrix, int d, int x, int y) //broji koliko se bombi 
 	return bomb_counter;
 }
 
-field*** reveal_matrix(field*** matrix, int d, int x, int y)
+std::vector<std::vector<field*>> reveal_matrix(std::vector<std::vector<field*>> matrix, int d, int x, int y)
 {
 	if (x < 0 || x >= d || y < 0 || y >= d) //provjera da li se izaslo iz matrice
 		return matrix;
@@ -162,7 +160,7 @@ field*** reveal_matrix(field*** matrix, int d, int x, int y)
 	return matrix;
 }
 
-bool game_over(field*** matrix, int d) //govori korisniku da li je igra gotova ovisno da li je pobjedio ili izgubio
+bool game_over(std::vector<std::vector<field*>> matrix, int d) //govori korisniku da li je igra gotova ovisno da li je pobjedio ili izgubio
 {
 	for (int i = 0; i < d; ++i)
 	{
