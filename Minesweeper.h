@@ -9,40 +9,35 @@ class field
 {
 protected:
 	int touch_counter = 0;
-	bool is_bomb = 0;
-	bool is_revealed = 0;
+	bool is_bomb;
+	bool is_revealed = false;
 	std::string unrevealed_sign = " [ ] ";
 	std::string revealed_sign;
-	void updateRevealedSign();
 public:
-	field() { updateRevealedSign(); }
+	field()
+	{
+		is_bomb = false;
+	}
 	virtual ~field() {}
 
-	std::string getUnrevealed_sign();
-	virtual std::string getRevealed_sign();
-	virtual bool getIs_bomb();
-	bool getIs_revealed();
-	int getTouch_counter();
+	std::string getUnrevealed_sign() const;
+	std::string getRevealed_sign() const;
+	bool getIs_bomb() const;
+	bool getIs_revealed() const;
+	int getTouch_counter() const;
 
 	void setTouch_counter(int count);
 	void setRevealed_sign(std::string rsign);
 	void setIsRevealed(bool revealed_c);
+	void setIs_bomb(bool bomb_c);
 };
 
-class bomb : public field
-{
-public:
-	bomb() { is_bomb = true; } 
-	bool getIs_bomb() override;
-	std::string getRevealed_sign() override;
-};
+std::vector<std::vector<field>> fill(int d, int random_count);
 
-std::vector<std::vector<field*>> fill(int d, int random_count);
+void print_matrix(const std::vector<std::vector<field>>& matrix, int d);
 
-void print_matrix(std::vector<std::vector<field*>> matrix, int d);
+int bomb_touching(const std::vector<std::vector<field>>& matrix, int d, int x, int y);
 
-int bomb_touching(std::vector<std::vector<field*>> matrix, int d, int x, int y);
+std::vector<std::vector<field>> reveal_matrix(std::vector<std::vector<field>>& matrix, int d, int x, int y);
 
-std::vector<std::vector<field*>> reveal_matrix(std::vector<std::vector<field*>> matrix, int d, int x, int y);
-
-bool game_over(std::vector<std::vector<field*>> matrix, int d);
+bool game_over(const std::vector<std::vector<field>>& matrix, int d);

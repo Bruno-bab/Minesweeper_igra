@@ -3,15 +3,15 @@
 
 int main()
 {
-	while (1)
+	while (true)
 	{
 		bool i;
 		int n;
 		char c;
 		int size, bomb_c;
-		
+
 		std::cout << "\nEasy mode (2 bombs) -> 0\nNormal mode (10 bombs) -> 1\nHard mode (25 bombs) -> 2\nCustom game -> 3\n";
-		while (1)
+		while (true)
 		{
 			if ((std::cin >> n) && (std::cin.peek() == '\n') && n >= 0 && n <= 3)
 				break;
@@ -36,7 +36,7 @@ int main()
 			break;
 		case 3:
 			std::cout << "\nGame size: ";
-			while (1)
+			while (true)
 			{
 				if ((std::cin >> size) && (std::cin.peek() == '\n') && size >= 1 && size <= 99)
 					break;
@@ -46,7 +46,7 @@ int main()
 			}
 
 			std::cout << "\nNumber of bombs: ";
-			while (1)
+			while (true)
 			{
 				if ((std::cin >> bomb_c) && (std::cin.peek() == '\n') && bomb_c >= 1 && bomb_c <= (size * size) - 1)
 					break;
@@ -55,11 +55,11 @@ int main()
 				std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			}
 		}
-		
-		std::vector<std::vector<field*>> matrix = fill(size, bomb_c);
+
+		std::vector<std::vector<field>> matrix = fill(size, bomb_c);
 		print_matrix(matrix, size);
 
-		while (1)
+		while (true)
 		{
 			if (game_over(matrix, size))
 				break;
@@ -67,7 +67,7 @@ int main()
 			int x, y;
 
 			std::cout << "\nX coordinate (row): ";
-			while (1)
+			while (true)
 			{
 				if ((std::cin >> x) && (std::cin.peek() == '\n') && x >= 0 && x <= size - 1)
 					break;
@@ -77,7 +77,7 @@ int main()
 			}
 
 			std::cout << "\nY coordinate (column): ";
-			while (1)
+			while (true)
 			{
 				if ((std::cin >> y) && (std::cin.peek() == '\n') && y >= 0 && y <= size - 1)
 					break;
@@ -92,7 +92,7 @@ int main()
 		}
 
 		std::cout << "\nPLAY AGAIN? YES(0)  NO(1)\n";
-		while (1)
+		while (true)
 		{
 			if ((std::cin >> i) && (std::cin.peek() == '\n') && i >= 0 && i <= 1)
 				break;
