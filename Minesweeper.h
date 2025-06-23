@@ -1,6 +1,6 @@
 #pragma once
 
-#include <string> 
+#include <string>
 #include <vector>
 
 class field
@@ -9,7 +9,6 @@ private:
 	int touch_counter = 0;
 	bool is_bomb = false;
 	bool is_revealed = false;
-	std::string revealed_sign;
 public:
 	std::string getUnrevealed_sign() const;
 	std::string getRevealed_sign() const;
@@ -30,4 +29,16 @@ int bomb_touching(const std::vector<std::vector<field>>& matrix, int d, int x, i
 
 std::vector<std::vector<field>> reveal_matrix(std::vector<std::vector<field>>& matrix, int d, int x, int y);
 
-bool game_over(const std::vector<std::vector<field>>& matrix, int d, std::ostream& os);
+bool game_end(const std::vector<std::vector<field>>& matrix, int d, std::ostream& os);
+
+int game_mode();
+
+int game_size();
+
+int bomb_number(int size);
+
+int x_coordinate(int size);
+
+int y_coordinate(int size);
+
+bool game_over();

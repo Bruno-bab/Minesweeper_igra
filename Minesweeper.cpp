@@ -1,5 +1,4 @@
 #include "Minesweeper.h"
-#include <cstdlib>
 #include <ctime>
 #include <iostream>
 
@@ -18,7 +17,6 @@ std::string field::getRevealed_sign() const
 }
 
 int field::getTouch_counter() const { return touch_counter; }
-
 
 void field::setTouch_counter(int count) { touch_counter = count; }
 
@@ -152,7 +150,7 @@ std::vector<std::vector<field>> reveal_matrix(std::vector<std::vector<field>>& m
 	return matrix;
 }
 
-bool game_over(const std::vector<std::vector<field>>& matrix, int d, std::ostream& os) //govori korisniku da li je igra gotova ovisno da li je pobjedio ili izgubio
+bool game_end(const std::vector<std::vector<field>>& matrix, int d, std::ostream& os) //govori korisniku da li je igra gotova ovisno da li je pobjedio ili izgubio
 {
 	for (int i = 0; i < d; ++i)
 	{
@@ -169,4 +167,88 @@ bool game_over(const std::vector<std::vector<field>>& matrix, int d, std::ostrea
 	}
 	os << "\nYOU WIN\n";
 	return true;
+}
+
+int game_mode()
+{
+	int mode;
+	while (true)
+	{
+		if ((std::cin >> mode) && (std::cin.peek() == '\n') && mode >= 0 && mode <= 3)
+			break;
+		std::cout << "\nEnter an integer between 0 and 3: ";
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	}
+	return mode;
+}
+
+int game_size()
+{
+	int size;
+	while (true)
+	{
+		if ((std::cin >> size) && (std::cin.peek() == '\n') && size >= 1 && size <= 99)
+			break;
+		std::cout << "\nEnter an integer between 1 and 99: ";
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	}
+	return size;
+}
+
+int bomb_number(int size)
+{
+	int bomb_c;
+	while (true)
+	{
+		if ((std::cin >> bomb_c) && (std::cin.peek() == '\n') && bomb_c >= 1 && bomb_c <= (size * size) - 1)
+			break;
+		std::cout << "\nEnter an integer between 1 and " << (size * size) - 1 << ": ";
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	}
+	return bomb_c;
+}
+
+int x_coordinate(int size)
+{
+	int x;
+	while (true)
+	{
+		if ((std::cin >> x) && (std::cin.peek() == '\n') && x >= 0 && x <= size - 1)
+			break;
+		std::cout << "\nEnter an integer between 0 and " << size - 1 << ": ";
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	}
+	return x;
+}
+
+int y_coordinate(int size)
+{
+	int y;
+	while (true)
+	{
+		if ((std::cin >> y) && (std::cin.peek() == '\n') && y >= 0 && y <= size - 1)
+			break;
+		std::cout << "\nEnter an integer between 0 and " << size - 1 << ": ";
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	}
+	return y;
+}
+
+bool game_over()
+{
+	bool over;
+	while (true)
+	{
+		if ((std::cin >> over) && (std::cin.peek() == '\n'))
+			break;
+		std::cout << "\nEnter 1 or 0: ";
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	}
+	return over;
 }

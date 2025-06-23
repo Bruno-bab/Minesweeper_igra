@@ -86,6 +86,7 @@ namespace UnitTestForMinesweeper
 		{
 			std::vector<std::vector<field>> matrix = fill(3, 0);
 			matrix[1][1].setIsRevealed(true);
+			matrix[2][1].setIsRevealed(true);
 			std::stringstream ss;
 			print_matrix(matrix, 3, ss);
 			std::string printed_matrix =
@@ -95,7 +96,7 @@ namespace UnitTestForMinesweeper
 				"  |\n"
 				"1 | [ ]  [0]  [ ] \n"
 				"  |\n"
-				"2 | [ ]  [ ]  [ ] ";
+				"2 | [ ]  [0]  [ ] ";
 
 			Assert::AreEqual(printed_matrix, ss.str());
 		}
@@ -145,7 +146,8 @@ namespace UnitTestForMinesweeper
 			std::stringstream ss;
 			std::vector<std::vector<field>> matrix(d, std::vector<field>(d));
 			matrix[0][0].setIsRevealed(true);
-			Assert::IsFalse(game_over(matrix, d, ss));
+
+			Assert::IsFalse(game_end(matrix, d, ss));
 		}
 
 		TEST_METHOD(You_lose)
@@ -157,7 +159,7 @@ namespace UnitTestForMinesweeper
 			std::stringstream ss;
 			std::string lost = "\nGAME OVER\nYOU LOSE\n";
 
-			Assert::IsTrue(game_over(matrix, d, ss));
+			Assert::IsTrue(game_end(matrix, d, ss));
 			Assert::AreEqual(lost, ss.str());
 		}
 
@@ -172,7 +174,7 @@ namespace UnitTestForMinesweeper
 			std::stringstream ss;
 			std::string lost = "\nYOU WIN\n";
 
-			Assert::IsTrue(game_over(matrix, d, ss));
+			Assert::IsTrue(game_end(matrix, d, ss));
 			Assert::AreEqual(lost, ss.str());
 		}
 	};
