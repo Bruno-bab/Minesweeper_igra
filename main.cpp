@@ -1,26 +1,27 @@
 #include "Minesweeper.h"
 #include <limits>
+#include <iostream>
 
 int main()
 {
 	while (true)
 	{
-		bool i;
-		int n;
+		int mode;
 		char c;
-		int size, bomb_c;
 
 		std::cout << "\nEasy mode (2 bombs) -> 0\nNormal mode (10 bombs) -> 1\nHard mode (25 bombs) -> 2\nCustom game -> 3\n";
 		while (true)
 		{
-			if ((std::cin >> n) && (std::cin.peek() == '\n') && n >= 0 && n <= 3)
+			if ((std::cin >> mode) && (std::cin.peek() == '\n') && mode >= 0 && mode <= 3)
 				break;
 			std::cout << "\nEnter an integer between 0 and 3: ";
 			std::cin.clear();
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		}
 
-		switch (n)
+		int size, bomb_c;
+
+		switch (mode)
 		{
 		case 0:
 			size = 5;
@@ -57,11 +58,11 @@ int main()
 		}
 
 		std::vector<std::vector<field>> matrix = fill(size, bomb_c);
-		print_matrix(matrix, size);
+		print_matrix(matrix, size, std::cout);
 
 		while (true)
 		{
-			if (game_over(matrix, size))
+			if (game_over(matrix, size, std::cout))
 				break;
 			std::cout << "\n\n";
 			int x, y;
@@ -88,19 +89,21 @@ int main()
 
 			std::cout << "\n\n";
 			reveal_matrix(matrix, size, x, y);
-			print_matrix(matrix, size);
+			print_matrix(matrix, size, std::cout);
 		}
+
+		bool over;
 
 		std::cout << "\nPLAY AGAIN? YES(0)  NO(1)\n";
 		while (true)
 		{
-			if ((std::cin >> i) && (std::cin.peek() == '\n') && i >= 0 && i <= 1)
+			if ((std::cin >> over) && (std::cin.peek() == '\n'))
 				break;
-			std::cout << "\nEnter 1 or 0 ";
+			std::cout << "\nEnter 1 or 0: ";
 			std::cin.clear();
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		}
-		if (i)
+		if (over)
 			break;
 	}
 }

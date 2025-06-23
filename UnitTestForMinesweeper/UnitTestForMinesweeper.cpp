@@ -22,11 +22,9 @@ namespace UnitTestForMinesweeper
 		{
 			f.setTouch_counter(3);
 			f.setIsRevealed(true);
-			f.setRevealed_sign(" [3] ");
 
 			Assert::AreEqual(3, f.getTouch_counter());
 			Assert::AreEqual(true, f.getIs_revealed());
-			Assert::AreEqual(std::string(" [3] "), f.getRevealed_sign());
 		}
 
 		TEST_METHOD(Bomb_override)
@@ -59,6 +57,51 @@ namespace UnitTestForMinesweeper
 			Assert::AreEqual(bombCount, real_bomb_count);
 		}
 	};
+
+	TEST_CLASS(Print_Matrix_Tests)
+	{
+	public:
+		TEST_METHOD(Print_unrevealed)
+		{
+			std::vector<std::vector<field>> matrix = fill(5, 2);
+			std::stringstream ss;
+			print_matrix(matrix, 5, ss);
+			std::string printed_matrix =
+				"     0    1    2    3    4\n"
+				"  _________________________\n"
+				"0 | [ ]  [ ]  [ ]  [ ]  [ ] \n"
+				"  |\n"
+				"1 | [ ]  [ ]  [ ]  [ ]  [ ] \n"
+				"  |\n"
+				"2 | [ ]  [ ]  [ ]  [ ]  [ ] \n"
+				"  |\n"
+				"3 | [ ]  [ ]  [ ]  [ ]  [ ] \n"
+				"  |\n"
+				"4 | [ ]  [ ]  [ ]  [ ]  [ ] ";
+
+			Assert::AreEqual(printed_matrix, ss.str());
+		}
+
+		TEST_METHOD(Print_revealed)
+		{
+			std::vector<std::vector<field>> matrix = fill(3, 0);
+			matrix[1][1].setIsRevealed(true);
+			std::stringstream ss;
+			print_matrix(matrix, 3, ss);
+			std::string printed_matrix =
+				"     0    1    2\n"
+				"  _______________\n"
+				"0 | [ ]  [ ]  [ ] \n"
+				"  |\n"
+				"1 | [ ]  [0]  [ ] \n"
+				"  |\n"
+				"2 | [ ]  [ ]  [ ] ";
+
+			Assert::AreEqual(printed_matrix, ss.str());
+		}
+		
+	};
+
 
 	TEST_CLASS(Bomb_Touching_Tests)
 	{
@@ -99,20 +142,38 @@ namespace UnitTestForMinesweeper
 		TEST_METHOD(Return_0_if_not_all_revealed)
 		{
 			int d = 5;
+			std::stringstream ss;
 			std::vector<std::vector<field>> matrix(d, std::vector<field>(d));
-			matrix[0][0].setIsRevealed(true); 
-
-			Assert::IsFalse(game_over(matrix, d));
+			matrix[0][0].setIsRevealed(true);
+			Assert::IsFalse(game_over(matrix, d, ss));
 		}
 
-		TEST_METHOD(Return_1_if_bomb_is_revealed)
+		TEST_METHOD(You_lose)
 		{
 			int d = 5;
 			std::vector<std::vector<field>> matrix(d, std::vector<field>(d));
 			matrix[0][0].setIs_bomb(true);
 			matrix[0][0].setIsRevealed(true);
+			std::stringstream ss;
+			std::string lost = "\nGAME OVER\nYOU LOSE\n";
 
-			Assert::IsTrue(game_over(matrix, d));
+			Assert::IsTrue(game_over(matrix, d, ss));
+			Assert::AreEqual(lost, ss.str());
+		}
+
+		TEST_METHOD(You_win)
+		{
+			int d = 2;
+			std::vector<std::vector<field>> matrix(d, std::vector<field>(d));
+			matrix[0][0].setIs_bomb(true);
+			matrix[0][1].setIsRevealed(true);
+			matrix[1][0].setIsRevealed(true);
+			matrix[1][1].setIsRevealed(true);
+			std::stringstream ss;
+			std::string lost = "\nYOU WIN\n";
+
+			Assert::IsTrue(game_over(matrix, d, ss));
+			Assert::AreEqual(lost, ss.str());
 		}
 	};
 }

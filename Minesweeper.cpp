@@ -1,12 +1,13 @@
 #include "Minesweeper.h"
 #include <cstdlib>
 #include <ctime>
+#include <iostream>
 
 bool field::getIs_bomb() const { return is_bomb; }
 
 bool field::getIs_revealed() const { return is_revealed; }
 
-std::string field::getUnrevealed_sign() const { return unrevealed_sign; }
+std::string field::getUnrevealed_sign() const { return " [ ] "; }
 
 std::string field::getRevealed_sign() const
 {
@@ -20,8 +21,6 @@ int field::getTouch_counter() const { return touch_counter; }
 
 
 void field::setTouch_counter(int count) { touch_counter = count; }
-
-void field::setRevealed_sign(std::string rsign) { revealed_sign = rsign; }
 
 void field::setIsRevealed(bool revealed_c) { is_revealed = revealed_c; }
 
@@ -41,7 +40,7 @@ std::vector<std::vector<field>> fill(int d, int random_count)
 
 		if (!(matrix[random_i][random_j]).getIs_bomb())
 		{
-			matrix[random_i][random_j].setIs_bomb(1);
+			matrix[random_i][random_j].setIs_bomb(true);
 			counter++;
 		}
 	}
@@ -58,38 +57,38 @@ std::vector<std::vector<field>> fill(int d, int random_count)
 	return matrix;
 }
 
-void print_matrix(const std::vector<std::vector<field>>& matrix, int d) //ispisuje matricu zajdno sa x i y koordinatama
+void print_matrix(const std::vector<std::vector<field>>& matrix, int d, std::ostream& os) //ispisuje matricu zajdno sa x i y koordinatama
 {
-	std::cout << " ";
+	os << " ";
 	for (int i = 0; i < d; ++i)
 	{
 		if (i > 9)
-			std::cout << "   " << i;
+			os << "   " << i;
 		else
-			std::cout << "    " << i;
+			os << "    " << i;
 	}
 
-	std::cout << "\n  ";
+	os << "\n  ";
 	for (int i = 0; i < d; ++i)
-		std::cout << "_____";
-	std::cout << "\n0 |";
+		os << "_____";
+	os << "\n0 |";
 
 	for (int i = 0; i < d; ++i)
 	{
 		for (int j = 0; j < d; ++j)
 		{
 			if (!matrix[i][j].getIs_revealed()) //ovisno da li je polje otvoreno, ispisuje se njegovo stanje
-				std::cout << matrix[i][j].getUnrevealed_sign();
+				os << matrix[i][j].getUnrevealed_sign();
 			else
-				std::cout << matrix[i][j].getRevealed_sign();
+				os << matrix[i][j].getRevealed_sign();
 		}
 		if (i < d - 1)
 		{
-			std::cout << "\n  |\n";
+			os << "\n  |\n";
 			if (i >= 9)
-				std::cout << i + 1 << "|";
+				os << i + 1 << "|";
 			else
-				std::cout << i + 1 << " |";
+				os << i + 1 << " |";
 		}
 	}
 }
@@ -127,13 +126,13 @@ std::vector<std::vector<field>> reveal_matrix(std::vector<std::vector<field>>& m
 	if (matrix[x][y].getIs_revealed()) //ako je polje vec bilo odabrano nista se ne dogada
 		return matrix;
 
-	matrix[x][y].setIsRevealed(1); //mjenja stanje odabranog polja na otvoreno
+	matrix[x][y].setIsRevealed(true); //mjenja stanje odabranog polja na otvoreno
 
 	if (matrix[x][y].getIs_bomb()) //ako je odabrano polje sva se polja otvaraju
 	{
 		for (int i = 0; i < d; ++i)
 			for (int j = 0; j < d; ++j)
-				matrix[i][j].setIsRevealed(1);
+				matrix[i][j].setIsRevealed(true);
 		return matrix;
 	}
 
@@ -153,7 +152,7 @@ std::vector<std::vector<field>> reveal_matrix(std::vector<std::vector<field>>& m
 	return matrix;
 }
 
-bool game_over(const std::vector<std::vector<field>>& matrix, int d) //govori korisniku da li je igra gotova ovisno da li je pobjedio ili izgubio
+bool game_over(const std::vector<std::vector<field>>& matrix, int d, std::ostream& os) //govori korisniku da li je igra gotova ovisno da li je pobjedio ili izgubio
 {
 	for (int i = 0; i < d; ++i)
 	{
@@ -163,11 +162,11 @@ bool game_over(const std::vector<std::vector<field>>& matrix, int d) //govori ko
 				return false;
 			if (matrix[i][j].getIs_bomb() && (matrix[i][j].getIs_revealed()))
 			{
-				std::cout << "\nGAME OVER\nYOU LOSE\n";
+				os << "\nGAME OVER\nYOU LOSE\n";
 				return true;
 			}
 		}
 	}
-	std::cout << "\nYOU WIN\n";
+	os << "\nYOU WIN\n";
 	return true;
 }
